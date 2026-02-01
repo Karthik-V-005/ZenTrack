@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function LaunchPage() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#0b1020] via-[#0e1630] to-[#020617] flex items-center justify-center relative overflow-hidden">
 
@@ -34,9 +36,12 @@ export default function LaunchPage() {
 
         {/* CTA Buttons */}
 <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-  <button className="group flex items-center justify-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-base font-semibold text-white transition hover:bg-blue-500 hover:scale-105">
+  <button
+  onClick={() => navigate("/auth")}
+  className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-full text-white"
+>
     Get Started
-    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    <ArrowRight className="inline-block w-4 h-4 ml-2" />
   </button>
 
   <button className="rounded-full border border-blue-500 px-6 py-3 text-base font-medium text-white transition hover:bg-blue-500/15 hover:scale-105">
