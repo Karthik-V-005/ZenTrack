@@ -28,5 +28,8 @@ export const useZenStore = create<ZenState>((set) => ({
   setUser: (user) => set({ user, isAuthenticated: !!user }),
   toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
   setFatigueScore: (score) => set({ fatigueScore: score }),
-  logout: () => set({ user: null, isAuthenticated: false }),
+  logout: () => {
+    localStorage.removeItem('token');
+    set({ user: null, isAuthenticated: false });
+  },
 }));

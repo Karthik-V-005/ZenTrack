@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Zap, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useZenStore } from "../store/useStore";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,6 +12,7 @@ const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const setUser = useZenStore((s) => s.setUser);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ const AuthPage = () => {
       // ✅ LOGIN SUCCESS
       if (isLogin && res.data.token) {
         localStorage.setItem("token", res.data.token);
+        setUser(res.data.user || null);
         navigate("/dashboard");
       }
 
