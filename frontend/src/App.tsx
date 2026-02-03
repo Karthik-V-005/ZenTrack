@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import LaunchPage from "./pages/LaunchPage";
 import AuthPage from "./pages/AuthPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import PrivateRoute from "./routes/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
-import { Analytics } from "./pages/Analytics";
-import { Recommendations } from "./pages/Recommendations";
-import { Settings } from "lucide-react";
-
+import {Analytics} from "./pages/Analytics";
+import {Recommendations} from "./pages/Recommendations";
+import {Settings} from "./pages/Settings";
 
 function App() {
   return (
@@ -20,7 +20,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
-                <Route
+        {/* Protected routes */}
+        <Route
           path="/dashboard"
           element={
             <PrivateRoute>
@@ -28,6 +29,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/analytics"
           element={
@@ -36,6 +38,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/recommendations"
           element={
@@ -44,6 +47,7 @@ function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/settings"
           element={
@@ -52,7 +56,6 @@ function App() {
             </PrivateRoute>
           }
         />
-
       </Routes>
     </BrowserRouter>
   );
