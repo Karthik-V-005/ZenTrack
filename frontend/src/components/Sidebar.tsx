@@ -37,12 +37,11 @@ const Sidebar = () => {
 
   return (
     <motion.aside
-      initial={{ width: isSidebarOpen ? 256 : 80 }}
+      initial={false}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
-      transition={{ type: 'spring', stiffness: 260, damping: 30 }}
+      transition={{ type: "tween", duration: 0.2, ease: "easeInOut" }}
       className={cn(
-        "relative h-screen bg-[#0b0b0f] border-r border-slate-800/60 z-50 flex shrink-0 flex-col transition-all duration-300",
-        isSidebarOpen ? "w-64" : "w-20",
+        "relative h-screen bg-[#0b0b0f] border-r border-slate-800/60 z-50 flex shrink-0 flex-col overflow-visible",
       )}
       aria-expanded={isSidebarOpen}
     >
@@ -62,21 +61,25 @@ const Sidebar = () => {
             >
               ZenTrack
             </motion.span>
-          )} 
+          )}
         </div>
       </div>
 
       {/* Toggle */}
       <button
         onClick={toggleSidebar}
-        aria-label={isSidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
-        className="absolute -right-3 top-24 w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white"
+        aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+        className="absolute right-0 top-24 z-50 h-8 w-8 translate-x-1/4 rounded-full border border-slate-600/70 bg-slate-700/80 text-slate-100 shadow-sm backdrop-blur flex items-center justify-center hover:bg-slate-600/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
       >
         <motion.div
           animate={{ rotate: isSidebarOpen ? 0 : 180 }}
           transition={{ duration: 0.25 }}
         >
-          {isSidebarOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+          {isSidebarOpen ? (
+            <ChevronLeft size={16} />
+          ) : (
+            <ChevronRight size={16} />
+          )}
         </motion.div>
       </button>
 
