@@ -5,10 +5,11 @@ import AuthPage from "./pages/AuthPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import PrivateRoute from "./routes/PrivateRoute";
-import {Dashboard} from "./pages/Dashboard";
-import {Analytics} from "./pages/Analytics";
-import {Recommendations} from "./pages/Recommendations";
-import {Settings} from "./pages/Settings";
+import Dashboard from "./pages/Dashboard";
+import { Analytics } from "./pages/Analytics";
+import { Recommendations } from "./pages/Recommendations";
+import { Settings } from "./pages/Settings";
+import { LiveUsage } from "./pages/LiveUsage";
 
 function App() {
   return (
@@ -53,6 +54,15 @@ function App() {
           element={
             <PrivateRoute>
               <Settings />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/live-usage"
+          element={
+            <PrivateRoute>
+              <LiveUsage />
             </PrivateRoute>
           }
         />
