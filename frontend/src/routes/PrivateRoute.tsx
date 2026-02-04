@@ -5,7 +5,7 @@ import React from 'react';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 
-  const { isAuthenticated } = useZenStore();
+  const { isAuthenticated, isSidebarOpen } = useZenStore();
 
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
@@ -18,8 +18,8 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
       {/* Sidebar always visible */}
       <Sidebar />
 
-      {/* Content area scrolls, not the page */}
-      <main className="flex-1 overflow-y-auto">
+      {/* Content area scrolls, not the page (shifts beside the fixed sidebar) */}
+      <main className={`flex-1 overflow-y-auto transition-all duration-300 p-6 ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
         {children}
       </main>
 
