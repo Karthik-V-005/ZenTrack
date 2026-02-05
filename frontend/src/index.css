@@ -1,1 +1,35 @@
 @import "tailwindcss";
+/* ===== ZenTrack Dark Theme Scrollbar ===== */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f1a; /* matches dashboard background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #010916,  /* soft blue */
+    #01010e   /* indigo */
+  );
+  border-radius: 10px;
+  border: 2px solid #0b0f1a; /* blends thumb into bg */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #060748,
+    #181a2b
+  );
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1b1b20 #101112;
+}

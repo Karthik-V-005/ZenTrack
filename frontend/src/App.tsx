@@ -5,7 +5,7 @@ import AuthPage from "./pages/AuthPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import PrivateRoute from "./routes/PrivateRoute";
-import Dashboard from "./pages/Dashboard";
+import {Dashboard} from "./pages/Dashboard";
 import { Analytics } from "./pages/Analytics";
 import { Recommendations } from "./pages/Recommendations";
 import { Settings } from "./pages/Settings";
