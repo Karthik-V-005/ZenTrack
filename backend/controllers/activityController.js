@@ -5,6 +5,21 @@ const {
   computeWindowFeatures,
   upsertWindowFeatures,
 } = require("../services/featureAggregator");
+const {
+  buildFeatureVectorFromWindow,
+  predictFatigueScore,
+} = require("../services/mlFatigueClient");
+
+async function attachFatigueInference(windowDoc) {
+  try {
+    const features = buildFeatureVectorFromWindow(windowDoc);
+    const inference = await predictFatigueScore(features);
+    return { ...windowDoc, ...inference };
+  } catch (err) {
+    // ML service is optional for ingestion; don't block event flow.
+    return windowDoc;
+  }
+}
 
 function normalizeEvent(input) {
   const ts = input.ts ? new Date(input.ts) : new Date();
@@ -70,17 +85,18 @@ async function postEvents(req, res) {
       source: last.source,
     });
     const upserted = await upsertWindowFeatures(featureDoc);
+    const enriched = await attachFatigueInference(upserted);
 
     // Emit live metrics to this user via socket if available.
     const io = req.app.get("io");
     if (io) {
-      io.to(`user:${userId}`).emit("usage:metrics", upserted);
+      io.to(`user:${userId}`).emit("usage:metrics", enriched);
     }
 
     return res.status(200).json({
       success: true,
       message: "Events ingested",
-      window: upserted,
+      window: enriched,
     });
   } catch (err) {
     console.error("postEvents error:", err);
@@ -184,7 +200,8 @@ async function getCurrentWindow(req, res) {
       .lean()
       .exec();
     if (existing) {
-      return res.status(200).json({ success: true, window: existing });
+      const enriched = await attachFatigueInference(existing);
+      return res.status(200).json({ success: true, window: enriched });
     }
 
     const featureDoc = await computeWindowFeatures({
@@ -193,7 +210,8 @@ async function getCurrentWindow(req, res) {
       source,
     });
     const upserted = await upsertWindowFeatures(featureDoc);
-    return res.status(200).json({ success: true, window: upserted });
+    const enriched = await attachFatigueInference(upserted);
+    return res.status(200).json({ success: true, window: enriched });
   } catch (err) {
     console.error("getCurrentWindow error:", err);
     return res.status(500).json({ success: false, message: "Server error" });

@@ -5,6 +5,8 @@ type UsageWindow = {
   windowStart: string;
   windowEnd: string;
   source: "web" | "desktop" | "mobile" | "unknown";
+  fatigue_score?: number;
+  severity?: "Healthy" | "Mild" | "High" | "Severe";
   total_active_minutes: number;
   longest_continuous_session: number;
   avg_session_length: number;
@@ -26,6 +28,8 @@ const DEFAULT_WINDOW: UsageWindow = {
   windowStart: new Date().toISOString(),
   windowEnd: new Date().toISOString(),
   source: "unknown",
+  fatigue_score: undefined,
+  severity: undefined,
   total_active_minutes: 0,
   longest_continuous_session: 0,
   avg_session_length: 0,
@@ -142,6 +146,19 @@ export default function LiveUsageMonitor(props: {
 
   const rows: Array<{ key: keyof UsageWindow; label: string; value: string }> =
     [
+      {
+        key: "fatigue_score",
+        label: "fatigue_score",
+        value:
+          typeof window.fatigue_score === "number"
+            ? formatNumber(window.fatigue_score, 1)
+            : "—",
+      },
+      {
+        key: "severity",
+        label: "severity",
+        value: window.severity ?? "—",
+      },
       {
         key: "total_active_minutes",
         label: "total_active_minutes",
