@@ -123,29 +123,68 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        {/* Stats (compact cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { label: 'Screen Time', value: '6h 12m', icon: Smartphone, color: 'text-blue-400', bg: 'bg-blue-400/10' },
-            { label: 'Eye Strain', value: 'Moderate', icon: AlertCircle, color: 'text-amber-400', bg: 'bg-amber-400/10' },
-            { label: 'Focus Periods', value: '4 Blocks', icon: Zap, color: 'text-indigo-400', bg: 'bg-indigo-400/10' },
-            { label: 'Rest Points', value: '240 XP', icon: Battery, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-          ].map((stat, i) => {
-            const StatIcon = stat.icon as any;
-            return (
-              <div key={i} className="bg-[#111114] p-4 rounded-2xl border border-slate-800/50">
-                <div className="flex items-center justify-between mb-3">
-                  <div className={`p-2 rounded-xl ${stat.bg}`}>
-                    <StatIcon className={`w-5 h-5 ${stat.color}`} />
-                  </div>
-                  <TrendingUp className="w-4 h-4 text-emerald-500" />
-                </div>
-                <p className="text-slate-500 text-sm mb-1">{stat.label}</p>
-                <p className="text-lg md:text-2xl font-bold">{stat.value}</p>
-              </div>
-            );
-          })}
+{/* Grid Stats */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {[
+    {
+      label: 'Screen Time',
+      value: '6h 12m',
+      icon: Smartphone,
+      color: 'text-blue-400',
+      bg: 'bg-blue-400/10'
+    },
+    {
+      label: 'Eye Strain',
+      value: 'Moderate',
+      icon: AlertCircle,
+      color: 'text-amber-400',
+      bg: 'bg-amber-400/10'
+    },
+    {
+      label: 'Focus Periods',
+      value: '4 Blocks',
+      icon: Zap,
+      color: 'text-indigo-400',
+      bg: 'bg-indigo-400/10'
+    },
+    {
+      label: 'Rest Points',
+      value: '240 XP',
+      icon: Battery,
+      color: 'text-emerald-400',
+      bg: 'bg-emerald-400/10'
+    }
+  ].map((stat, idx) => (
+    <motion.div
+      key={idx}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: idx * 0.1 }}
+      className="
+        bg-[#111114]
+        border border-slate-800/50
+        rounded-2xl p-6
+        transition-all duration-300
+        hover:scale-[1.02]
+        
+      "
+    >
+      <div className="flex items-center justify-between mb-4">
+        <div className={`p-2 rounded-xl ${stat.bg}`}>
+          <stat.icon className={`w-5 h-5 ${stat.color}`} />
         </div>
+        <TrendingUp className="w-4 h-4 text-emerald-500" />
+      </div>
+
+      <p className="text-slate-500 text-sm mb-1">
+        {stat.label}
+      </p>
+      <p className="text-2xl font-bold text-white">
+        {stat.value}
+      </p>
+    </motion.div>
+  ))}
+</div>
 
         {/* Recent Activity / Session History */}
         <div className="bg-[#111114] rounded-3xl border border-slate-800/50 overflow-visible">
