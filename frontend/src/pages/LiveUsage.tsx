@@ -59,7 +59,7 @@ export const LiveUsage = () => {
       setLiveMetrics((prev) => {
         const fatigue = Math.min(
           100,
-          Math.max(0, (prev.fatigue_score || 0) + (Math.random() * 4 - 1))
+          Math.max(0, (prev.fatigue_score || 0) + (Math.random() * 4 - 1)),
         );
 
         let severity: "low" | "medium" | "high" = "low";
@@ -71,11 +71,16 @@ export const LiveUsage = () => {
           fatigue_score: fatigue,
           severity,
           total_active_minutes: prev.total_active_minutes + 1,
-          app_switch_count: prev.app_switch_count + (Math.random() > 0.9 ? 1 : 0),
-          tab_switch_count: prev.tab_switch_count + (Math.random() > 0.85 ? 1 : 0),
+          app_switch_count:
+            prev.app_switch_count + (Math.random() > 0.9 ? 1 : 0),
+          tab_switch_count:
+            prev.tab_switch_count + (Math.random() > 0.85 ? 1 : 0),
           context_switch_rate: Math.min(
             1,
-            Math.max(0, prev.context_switch_rate + (Math.random() - 0.5) * 0.02)
+            Math.max(
+              0,
+              prev.context_switch_rate + (Math.random() - 0.5) * 0.02,
+            ),
           ),
         };
       });
@@ -99,7 +104,9 @@ export const LiveUsage = () => {
           <div className="p-2 bg-indigo-500/10 rounded-lg">
             <Activity className="w-6 h-6 text-indigo-400" />
           </div>
-          <h1 className="text-3xl font-bold text-white">Live Fatigue Monitor</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Live Fatigue Monitor
+          </h1>
         </div>
         <p className="text-slate-500 text-lg">
           Fatigue estimation based on continuous device usage behaviour.
@@ -116,7 +123,9 @@ export const LiveUsage = () => {
         >
           <div className="flex flex-col md:flex-row justify-between gap-10">
             <div>
-              <p className={`text-xs font-bold uppercase tracking-[0.2em] ${sev.color}`}>
+              <p
+                className={`text-xs font-bold uppercase tracking-[0.2em] ${sev.color}`}
+              >
                 Current Fatigue State
               </p>
               <h2 className="text-4xl font-bold text-white mt-3">
@@ -149,8 +158,8 @@ export const LiveUsage = () => {
                   currentSeverity === "high"
                     ? "bg-rose-500"
                     : currentSeverity === "medium"
-                    ? "bg-amber-500"
-                    : "bg-emerald-500"
+                      ? "bg-amber-500"
+                      : "bg-emerald-500"
                 }`}
               />
             </div>
@@ -171,9 +180,7 @@ export const LiveUsage = () => {
          SECONDARY: FATIGUE FACTORS
       ========================= */}
       <section>
-        <h2 className="section-title">
-          Usage Factors Contributing to Fatigue
-        </h2>
+        <h2 className="section-title">Usage Factors Contributing to Fatigue</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card
@@ -195,9 +202,7 @@ export const LiveUsage = () => {
           <motion.div className="bg-[#111114] border border-slate-800/50 rounded-3xl p-8">
             <Shield className="w-6 h-6 text-slate-400 mb-6" />
             <p className="text-slate-500 text-sm">Usage Consistency</p>
-            <p className="text-4xl font-bold text-white">
-              {usageConsistency}%
-            </p>
+            <p className="text-4xl font-bold text-white">{usageConsistency}%</p>
             <p className="text-xs text-slate-400 mt-2">
               Derived from context switching behaviour
             </p>
@@ -234,7 +239,7 @@ export const LiveUsage = () => {
               icon={Moon}
               title="Late Night Usage"
               value={`${Math.round(
-                (liveMetrics.late_night_usage_ratio || 0) * 100
+                (liveMetrics.late_night_usage_ratio || 0) * 100,
               )}%`}
               caption="Fatigue risk factor"
             />
@@ -261,8 +266,9 @@ export const LiveUsage = () => {
    SMALL COMPONENTS
 ========================= */
 
-const sectionTitle =
-  "text-sm font-bold uppercase tracking-[0.2em] text-slate-600 mb-6";
+// const sectionTitle =
+//   "text-sm font-bold uppercase tracking-[0.2em] text-slate-600 mb-6";
+
 const AnimatedValue = ({ value, className }: any) => (
   <motion.span
     key={value}

@@ -4,7 +4,7 @@ import { useZenStore } from "../store/useStore";
 import React from "react";
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isSidebarOpen } = useZenStore();
+  const { isAuthenticated } = useZenStore();
 
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
