@@ -12,8 +12,35 @@ const initSocket = require("./sockets/initSocket");
 const app = express();
 const server = http.createServer(app);
 
+const DEFAULT_FRONTEND_ORIGINS = [
+  "https://zentrack-lilac.vercel.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+const stripTrailingSlashes = (value) =>
+  typeof value === "string" ? value.replace(/\/+$/, "") : value;
+
+const allowedOrigins = (
+  process.env.CORS_ORIGIN || DEFAULT_FRONTEND_ORIGINS.join(",")
+)
+  .split(",")
+  .map((v) => stripTrailingSlashes(v.trim()))
+  .filter(Boolean);
+
 // ✅ MIDDLEWARE
-app.use(cors());
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      const normalized = stripTrailingSlashes(origin);
+      if (allowedOrigins.includes("*") || allowedOrigins.includes(normalized)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // 🔹 TEST ROUTE
@@ -43,7 +70,7 @@ mongoose
 
 // 🔹 Socket.IO (JWT-protected)
 const io = initSocket(server, {
-  corsOrigin: process.env.CORS_ORIGIN || "*",
+  corsOrigin: allowedOrigins.length ? allowedOrigins : "*",
 });
 app.set("io", io);
 

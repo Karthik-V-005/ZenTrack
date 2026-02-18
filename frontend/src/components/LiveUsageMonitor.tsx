@@ -61,7 +61,12 @@ export default function LiveUsageMonitor(props: {
 }) {
   const source = props.source ?? "unknown";
   const baseUrl = useMemo(() => {
-    return (import.meta as any).env?.VITE_API_URL || "http://localhost:5000";
+    const envUrl = (import.meta as any).env?.VITE_API_URL as string | undefined;
+    if (envUrl) return envUrl.replace(/\/+$/, "");
+    const isProd = Boolean((import.meta as any).env?.PROD);
+    return isProd
+      ? "https://zentrack-w3xl.onrender.com"
+      : "http://localhost:5000";
   }, []);
 
   const [status, setStatus] = useState<

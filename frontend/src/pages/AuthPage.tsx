@@ -14,13 +14,22 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const setUser = useZenStore((s) => s.setUser);
 
+  const apiBaseUrl = (() => {
+    const envUrl = (import.meta as any).env?.VITE_API_URL as string | undefined;
+    if (envUrl) return envUrl.replace(/\/+$/, "");
+    const isProd = Boolean((import.meta as any).env?.PROD);
+    return isProd
+      ? "https://zentrack-w3xl.onrender.com"
+      : "http://localhost:5000";
+  })();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const url = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/register";
+        ? `${apiBaseUrl}/api/auth/login`
+        : `${apiBaseUrl}/api/auth/register`;
 
       const res = await axios.post(url, { email, password });
 
@@ -98,7 +107,9 @@ const AuthPage = () => {
 
             {/* Password */}
             <div>
-              <label className="text-[11px] text-slate-400 ml-1">Password</label>
+              <label className="text-[11px] text-slate-400 ml-1">
+                Password
+              </label>
               <div className="relative mt-1">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <input
@@ -162,4 +173,3 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
-
