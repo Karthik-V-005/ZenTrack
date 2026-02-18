@@ -1,19 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { motion } from "motion/react";
 import {
   BarChart,
   Bar,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   PieChart,
   Pie,
   Cell,
 } from "recharts";
-import { Calendar, Filter, Download, Info } from "lucide-react";
+import { Calendar, Download, Info } from "lucide-react";
 import { io } from "socket.io-client";
+import { useEffect, useMemo, useState } from "react";
 
 const weeklyData = [
   { day: "Mon", usage: 6.5, fatigue: 45 },

@@ -1,4 +1,3 @@
-import React from 'react';
 import { 
   User, 
   Bell, 
@@ -8,8 +7,6 @@ import {
   Smartphone, 
   ChevronRight,
   Monitor,
-  Moon,
-  Sun
 } from 'lucide-react';
 import { useZenStore } from '../store/useStore';
 

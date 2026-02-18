@@ -1,11 +1,8 @@
-import React, { useEffect, useMemo } from "react";
 import { motion } from "motion/react";
 import {
   Activity,
   Timer,
   BarChart3,
-  Monitor,
-  Globe,
   Layout,
   MousePointer2,
   Moon,
@@ -14,6 +11,7 @@ import {
   Shield,
 } from "lucide-react";
 import { useZenStore } from "../store/useStore";
+import { useEffect, useMemo } from "react";
 
 export const LiveUsage = () => {
   const { liveMetrics, setLiveMetrics } = useZenStore();
